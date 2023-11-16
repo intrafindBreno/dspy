@@ -72,7 +72,7 @@ class Dataset:
         output = []
 
         for example in data:
-            output.append(Example(**example, dspy_uuid=str(uuid.uuid4()), dspy_split=split))
+            output.append(Example(**example, dspy_uuid=str(uuid.uuid4()), dspy_split=split).with_inputs("question"))
         
         # TODO: NOTE: Ideally we use these uuids for dedup internally, for demos and internal train/val splits.
         # Now, some tasks (like convQA and Colors) have overlapping examples. Here, we should allow the user to give us

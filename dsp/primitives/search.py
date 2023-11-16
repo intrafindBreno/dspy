@@ -7,7 +7,7 @@ def retrieve(query: str, k: int, **kwargs) -> list[str]:
     if not dsp.settings.rm:
         raise AssertionError("No RM is loaded.")
     passages = dsp.settings.rm(query, k=k, **kwargs)
-    passages = [psg.long_text for psg in passages]
+    passages = [psg for psg in passages["passages"]]
     
     if dsp.settings.reranker:
         passages_cs_scores = dsp.settings.reranker(query, passages)

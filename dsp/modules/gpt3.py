@@ -35,7 +35,7 @@ class GPT3(LM):
         self,
         model: str = "gpt-3.5-turbo-instruct",
         api_key: Optional[str] = None,
-        api_provider: Literal["openai", "azure"] = "openai",
+        api_provider: Literal["openai", "azure", "vllm"] = "openai",
         model_type: Literal["chat", "text"] = None,
         **kwargs,
     ):
@@ -52,6 +52,11 @@ class GPT3(LM):
             assert "api_version" in kwargs, "Must specify api_version for Azure API"
             assert "api_base" in kwargs, "Must specify api_base for Azure API"
             openai.api_type = "azure"
+            if kwargs.get("api_version"):
+                openai.api_version = kwargs["api_version"]
+        
+        if api_provider == "vllm":
+            openai.api_type = "vllm"
             if kwargs.get("api_version"):
                 openai.api_version = kwargs["api_version"]
 
